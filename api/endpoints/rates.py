@@ -29,7 +29,7 @@ async def average_rates_for_date(currency_code: str, date: str):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail=f'Date: {date} in wrong format, use YYYY-MM-DD')
 
-    currency_rates_response = requests.get(f'https://api.nbp.pl/api/exchangerates/rates/c/'
+    currency_rates_response = requests.get(f'https://api.nbp.pl/api/exchangerates/rates/a/'
                                            f'{currency_code.lower()}/{date}/?format=json')
     if currency_rates_response.status_code != 200:
         raise HTTPException(status_code=currency_rates_response.status_code, detail=currency_rates_response.text)
@@ -40,3 +40,25 @@ async def average_rates_for_date(currency_code: str, date: str):
                                                       currency_rates_json['rates'][0]['ask'])
 
     return {'average_rate': f'{average_rate}'}
+
+
+@router.get('/{currency_code}/max-min-average/{quotations}')
+async def max_min_average(currency_code: str, quotations: int):
+
+    currency_code_regex = re.compile('^[a-zA-Z]{3}$')
+    if not currency_code_regex.match(currency_code):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail=f'Currency code: {currency_code} in wrong format')
+
+    # check quotations format
+
+    multiple_rates_response = requests.get(
+        f'https://api.nbp.pl/api/exchangerates/rates/a/{currency_code}/last/{quotations}/?format=json')
+    if multiple_rates_response.status_code != 200:
+        raise HTTPException(status_code=multiple_rates_response.status_code, detail=multiple_rates_response.text)
+
+    rates_table = multiple_rates_response.json()['rates']
+
+    min_max_average_values = RatesService.min_max_average_values(rates_table)
+
+    return {'max-average-value': min_max_average_values.max, 'min-average-value': min_max_average_values.min}
