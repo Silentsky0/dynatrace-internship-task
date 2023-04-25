@@ -83,3 +83,38 @@ def test_min_max_average_exchange_rate_wrong_date():
 
     assert response.status_code == 404
     assert response.json() == {'detail': '\ufeff404 NotFound'}
+
+
+def test_major_buy_ask_difference_sek():
+    response = test_client.get('/rates/sek/buy-ask-difference/20')
+
+    assert response.status_code == 200
+    assert response.json() == {'major_buy_ask_difference': 0.0084}
+
+
+def test_major_buy_ask_difference_usd():
+    response = test_client.get('/rates/usd/buy-ask-difference/30')
+
+    assert response.status_code == 200
+    assert response.json() == {'major_buy_ask_difference': 0.089}
+
+
+def test_major_buy_ask_difference_bad_currency_code_format():
+    response = test_client.get('/rates/zz/buy-ask-difference/30')
+
+    assert response.status_code == 400
+    assert response.json() == {'detail': 'Currency code: zz in wrong format'}
+
+
+def test_major_buy_ask_difference_bad_number_of_quotations_too_high():
+    response = test_client.get('/rates/usd/buy-ask-difference/512')
+
+    assert response.status_code == 400
+    assert response.json() == {'detail': 'Quotations exceed the <0, 255> range'}
+
+
+def test_major_buy_ask_difference_bad_number_of_quotations_too_low():
+    response = test_client.get('/rates/usd/buy-ask-difference/0')
+
+    assert response.status_code == 400
+    assert response.json() == {'detail': 'Quotations exceed the <0, 255> range'}
