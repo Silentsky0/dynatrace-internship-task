@@ -14,7 +14,7 @@ async def average_exchange_rate_for_date(currency_code: str, date: str):
 
     average_rate = RatesService.average_rate_for_date(currency_code, date)
 
-    return {'average_rate': f'{average_rate}'}
+    return {'average_rate': average_rate}
 
 
 @router.get('/{currency_code}/min-max-average/{quotations}')
@@ -24,7 +24,7 @@ async def min_max_average_exchange_rate(currency_code: str, quotations: int):
     """
     min_max_average_values = RatesService.min_max_average(currency_code, quotations)
 
-    return {'min_average_value': min_max_average_values.min, 'max-average-value': min_max_average_values.max}
+    return {'min_average_value': min_max_average_values.min, 'max_average_value': min_max_average_values.max}
 
 
 @router.get('/{currency_code}/buy-ask-difference/{quotations}')

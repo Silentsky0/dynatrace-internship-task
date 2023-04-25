@@ -10,7 +10,7 @@ def test_average_rate_for_date_dkk():
 
     assert response.status_code == 200
     assert response.json() == {
-        'average_rate': '0.6279'
+        'average_rate': 0.6279
     }
 
 
@@ -19,7 +19,7 @@ def test_average_rate_for_date_usd():
 
     assert response.status_code == 200
     assert response.json() == {
-        'average_rate': '3.7254'
+        'average_rate': 3.7254
     }
 
 
@@ -45,12 +45,12 @@ def test_average_rate_for_date_nonexistent_currency():
 
 
 def test_min_max_average_exchange_rate_sek():
-    response = test_client.get('/rates/dkk/min-max-average/30')
+    response = test_client.get('/rates/sek/min-max-average/30')
 
     assert response.status_code == 200
     assert response.json() == {
-        'min_average_value': '0.4059',
-        'max_average_value': '0.4231'
+        'min_average_value': 0.4059,
+        'max_average_value': 0.4231
     }
 
 
@@ -59,8 +59,8 @@ def test_min_max_average_exchange_rate_czk():
 
     assert response.status_code == 200
     assert response.json() == {
-        'min_average_value': '0.1955',
-        'max_average_value': '0.2002'
+        'min_average_value': 0.1955,
+        'max_average_value': 0.2002
     }
 
 

@@ -22,7 +22,7 @@ class RatesService:
 
         currency_rates_json = RatesService.__download_rates_table_by_date(currency_code, date)
 
-        return currency_rates_json['rates'][0]['mid']
+        return float(currency_rates_json['rates'][0]['mid'])
 
     @staticmethod
     def min_max_average(currency_code: str, quotations: int) -> MinMaxAverageSchema:
