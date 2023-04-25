@@ -35,3 +35,51 @@ def test_average_rate_for_date_bad_date_format():
 
     assert response.status_code == 400
     assert response.json() == {'detail': 'Date: 04-04-2021 in wrong format, use YYYY-MM-DD'}
+
+
+def test_average_rate_for_date_nonexistent_currency():
+    response = test_client.get('/rates/pln/average/2023-04-04')
+
+    assert response.status_code == 404
+    assert response.json() == {'detail': '404 NotFound - Not Found - Brak danych'}
+
+
+def test_min_max_average_exchange_rate_sek():
+    response = test_client.get('/rates/dkk/min-max-average/30')
+
+    assert response.status_code == 200
+    assert response.json() == {
+        'min_average_value': '0.4059',
+        'max_average_value': '0.4231'
+    }
+
+
+def test_min_max_average_exchange_rate_czk():
+    response = test_client.get('/rates/czk/min-max-average/20')
+
+    assert response.status_code == 200
+    assert response.json() == {
+        'min_average_value': '0.1955',
+        'max_average_value': '0.2002'
+    }
+
+
+def test_min_max_average_exchange_rate_bad_currency_code():
+    response = test_client.get('/rates/qqqq/min-max-average/30')
+
+    assert response.status_code == 400
+    assert response.json() == {'detail': 'Currency code: qqqq in wrong format'}
+
+
+def test_min_max_average_exchange_rate_bad_number_of_quotations():
+    response = test_client.get('/rates/czk/min-max-average/500')
+
+    assert response.status_code == 400
+    assert response.json() == {'detail': 'Quotations exceed the <0, 255> range'}
+
+
+def test_min_max_average_exchange_rate_wrong_date():
+    response = test_client.get('/rates/czk/average/2023-04-56')
+
+    assert response.status_code == 404
+    assert response.json() == {'detail': '\ufeff404 NotFound'}
