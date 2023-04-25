@@ -24,7 +24,7 @@ async def min_max_average_exchange_rate(currency_code: str, quotations: int):
     """
     min_max_average_values = RatesService.min_max_average(currency_code, quotations)
 
-    return {'min-average-value': min_max_average_values.min, 'max-average-value': min_max_average_values.max}
+    return {'min_average_value': min_max_average_values.min, 'max-average-value': min_max_average_values.max}
 
 
 @router.get('/{currency_code}/buy-ask-difference/{quotations}')
@@ -35,4 +35,4 @@ async def major_buy_ask_difference(currency_code: str, quotations: int):
 
     major_buy_ask_difference_value = RatesService.major_buy_ask_difference(currency_code, quotations)
 
-    return {'major-buy-ask-difference': major_buy_ask_difference_value}
+    return {'major_buy_ask_difference': major_buy_ask_difference_value}
