@@ -1,26 +1,15 @@
-import datetime
-import re
-
-import requests
-from fastapi import FastAPI, HTTPException
-from starlette import status
+from fastapi import FastAPI
+from fastapi.openapi.docs import get_swagger_ui_html
 
 from domain.rates_service import RatesService
 
 router = FastAPI()
 
 
-@router.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
 @router.get('/{currency_code}/average/{date}')
-async def average_rate_for_date(currency_code: str, date: str):
+async def average_exchange_rate_for_date(currency_code: str, date: str):
     """
-    :param currency_code: three-letter currency code as specified by NBP
-    :param date: date as string formatted to YYYY-MM-DD
-    :return: an average exchange rate before a provided date
+    Returns an average exchange rate before a provided date
     """
 
     average_rate = RatesService.average_rate_for_date(currency_code, date)
@@ -29,11 +18,9 @@ async def average_rate_for_date(currency_code: str, date: str):
 
 
 @router.get('/{currency_code}/min-max-average/{quotations}')
-async def max_min_average(currency_code: str, quotations: int):
+async def min_max_average_exchange_rate(currency_code: str, quotations: int):
     """
-    :param currency_code: three-letter currency code as specified by NBP
-    :param quotations: number of working days before the current date to take into consideration
-    :return: the maximum and minimum average value of an exchange rate
+    Returns the maximum and minimum average value of an exchange rate
     """
     min_max_average_values = RatesService.min_max_average(currency_code, quotations)
 
@@ -41,13 +28,11 @@ async def max_min_average(currency_code: str, quotations: int):
 
 
 @router.get('/{currency_code}/buy-ask-difference/{quotations}')
-async def buy_ask_difference(currency_code: str, quotations: int):
+async def major_buy_ask_difference(currency_code: str, quotations: int):
     """
-    :param currency_code: three-letter currency code as specified by NBP
-    :param quotations: number of working days before the current date to take into consideration
-    :return: maximum absolute difference between buy and ask rates for a provided currency
+    Returns the maximum absolute difference between buy and ask rates for a provided currency
     """
 
-    major_buy_ask_difference = RatesService.major_buy_ask_difference(currency_code, quotations)
+    major_buy_ask_difference_value = RatesService.major_buy_ask_difference(currency_code, quotations)
 
-    return {'major-buy-ask-difference': major_buy_ask_difference}
+    return {'major-buy-ask-difference': major_buy_ask_difference_value}

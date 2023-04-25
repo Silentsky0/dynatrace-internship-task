@@ -1,6 +1,3 @@
-from typing import List
-import re
-
 import requests
 from fastapi import HTTPException
 from starlette import status
