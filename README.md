@@ -30,11 +30,17 @@ REST API providing access to results of simple operations on exchange rates acce
 public API
 
 ## Table of contents
+- [Overview](#overview)
+  - [Table of contents](#table-of-contents)
+  - [Prerequisites](#prerequisites)
+- [Setup](#setup)
+- [Usage](#usage)
+
 
 ## Prerequisites
 
 - `python` *`3.7`* or higher
-- `docker` - optional
+- `docker`
 
 # Setup
 
@@ -59,6 +65,8 @@ Here are some steps which should help you establish a local instance:
    docker run -d --name dynatrace-internship-task -p 80:80 dynatrace-internship-task:main
    ```
    The application should start in the background, it is available on `localhost:80`
+
+<br>
 
 - *You can also run the app in an ordinary way using `python`*
 
@@ -94,6 +102,9 @@ You can also follow the documentation provided below and try other operations:
   - returns:
     - an average exchange rate before a provided date
     - e.g. `http://127.0.0.1/rates/eur/average/2023-04-25` will return `"average_rate": 4.598`
+
+<br>
+
 - **GET** `/rates/{currency_code}/min-max-average/{quotations}` - Min and max average exchange rate for *n* given
   days (quotations)
   - params:
@@ -102,10 +113,14 @@ You can also follow the documentation provided below and try other operations:
   - returns:
     - the maximum and minimum average value of an exchange rate
     - e.g. `http://127.0.0.1/rates/sek/min-max-average/25` will return `{ "min_average_value": 0.4059, "max_average_value": 0.4231 }`
+
+<br>
+
 - **GET** `/rates/{currency_code}/buy-ask-difference/{quotations}` - Major buy and ask difference
   - params:
     - `currency_code` - three-letter currency code as specified by NBP
     - `quotations` - number of working days before the current date to take into consideration
   - returns:
     - maximum absolute difference between buy and ask rates for a provided currency
-    - e.g. `http://127.0.0.1/rates/gbp/buy-ask-difference/40` will return `"major_buy_ask_difference": 0.1074`
+    - e.g. `http://127.0.0.1/rates/gbp/buy-ask-difference/40` will return
+      `"major_buy_ask_difference": 0.1074`
