@@ -60,7 +60,7 @@ Here are some steps which should help you establish a local instance:
    ```
    The application should start in the background, it is available on `localhost:80`
 
-*3. You can also run the app in an ordinary way just using python*
+- *You can also run the app in an ordinary way using `python`*
 
    - Install the necessary requirements
      ```
@@ -75,22 +75,26 @@ Here are some steps which should help you establish a local instance:
 
 The root endpoint is configured to provide SwaggerUI API docs and is available at `http://127.0.0.1/`
 
+<br>
+
 To query the operations provided by this API you can use `curl`, an exemplary usage of asking for the average exchange
 rate of Pound Sterling on 14.04.2023 is show below:
 ```
 curl -X 'GET' 'http://127.0.0.1/rates/gbp/average/2023-04-14'
 ```
 
+<br>
+
 You can also follow the documentation provided below and try other operations:
 
-- **`GET`** `/rates/{currency_code}/average/{date}` - Average exchange rate of currency for a given date
+- **GET** `/rates/{currency_code}/average/{date}` - Average exchange rate of currency for a given date
   - params:
     - `currency_code` - three-letter currency code as specified by NBP
     - `date` - date as a string formatted to YYYY-MM-DD
   - returns:
     - an average exchange rate before a provided date
     - e.g. `http://127.0.0.1/rates/eur/average/2023-04-25` will return `"average_rate": 4.598`
-- **`GET`** `/rates/{currency_code}/min-max-average/{quotations}` - Min and max average exchange rate for *n* given
+- **GET** `/rates/{currency_code}/min-max-average/{quotations}` - Min and max average exchange rate for *n* given
   days (quotations)
   - params:
     - `currency_code` - three-letter currency code as specified by NBP
@@ -98,7 +102,7 @@ You can also follow the documentation provided below and try other operations:
   - returns:
     - the maximum and minimum average value of an exchange rate
     - e.g. `http://127.0.0.1/rates/sek/min-max-average/25` will return `{ "min_average_value": 0.4059, "max_average_value": 0.4231 }`
-- **`GET`** `/rates/{currency_code}/buy-ask-difference/{quotations}` - Major buy and ask difference
+- **GET** `/rates/{currency_code}/buy-ask-difference/{quotations}` - Major buy and ask difference
   - params:
     - `currency_code` - three-letter currency code as specified by NBP
     - `quotations` - number of working days before the current date to take into consideration
