@@ -19,6 +19,6 @@ def check_date_format_correctness(date: str):
 
 
 def check_quotations_correctness(quotations: int):
-    if quotations > 255:
+    if quotations > 255 or quotations < 1:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                            detail=f'Quotations exceed the <0, 255> range')
+                            detail=f'Quotations exceed the <1, 255> range')

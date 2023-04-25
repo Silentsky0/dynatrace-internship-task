@@ -75,7 +75,7 @@ def test_min_max_average_exchange_rate_bad_number_of_quotations():
     response = test_client.get('/rates/czk/min-max-average/500')
 
     assert response.status_code == 400
-    assert response.json() == {'detail': 'Quotations exceed the <0, 255> range'}
+    assert response.json() == {'detail': 'Quotations exceed the <1, 255> range'}
 
 
 def test_min_max_average_exchange_rate_wrong_date():
@@ -110,11 +110,11 @@ def test_major_buy_ask_difference_bad_number_of_quotations_too_high():
     response = test_client.get('/rates/usd/buy-ask-difference/512')
 
     assert response.status_code == 400
-    assert response.json() == {'detail': 'Quotations exceed the <0, 255> range'}
+    assert response.json() == {'detail': 'Quotations exceed the <1, 255> range'}
 
 
 def test_major_buy_ask_difference_bad_number_of_quotations_too_low():
     response = test_client.get('/rates/usd/buy-ask-difference/0')
 
     assert response.status_code == 400
-    assert response.json() == {'detail': 'Quotations exceed the <0, 255> range'}
+    assert response.json() == {'detail': 'Quotations exceed the <1, 255> range'}
