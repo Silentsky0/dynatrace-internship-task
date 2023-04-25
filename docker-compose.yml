@@ -1,0 +1,10 @@
+version: '3.9'
+
+services:
+  dynatrace-internship-task:
+    container_name: dynatrace-internship-task
+    image: silentsky0/dynatrace-internship-task:latest
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
